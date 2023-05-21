@@ -1,42 +1,24 @@
 import unittest
-import numpy as np
-from solution import adMatrixToAdList
+from solution import reachableNodes
 
-class TestAdMatrixToAdList(unittest.TestCase):
-    def test_empty_matrix(self):
-        adj_mat = []
-        expected_output = []
-        self.assertEqual(adMatrixToAdList(adj_mat), expected_output)
+class ReachableNodesTestCase(unittest.TestCase):
+    def test_reachable_nodes(self):
+        adj_list = [[1, 3], [2], [0], [4], [3], []]
+        start_node = 2
+        expected = {0, 1, 2, 3, 4}
+        self.assertEqual(reachableNodes(adj_list, start_node), expected)
+    
+    def test_reachable_nodes_alt(self):
+        adj_list = [[1, 3], [2], [0], [4], [3], []]
+        start_node = 3
+        expected = {3, 4}
+        self.assertEqual(reachableNodes(adj_list, start_node), expected)
 
-    def test_adjacency_matrix(self):
-        adj_mat = [[0, 1, 0, 1, 0, 0],
-                   [0, 0, 1, 0, 0, 0],
-                   [1, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 1, 0],
-                   [0, 0, 0, 1, 0, 0],
-                   [0, 0, 0, 0, 0, 0]]
-        expected_output = [[1, 3], [2], [0], [4], [3], []]
-        self.assertEqual(adMatrixToAdList(adj_mat), expected_output)
-
-    def test_all_zeros_matrix(self):
-        adj_mat = [[0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0]]
-        expected_output = [[], [], [], [], [], []]
-        self.assertEqual(adMatrixToAdList(adj_mat), expected_output)
-
-    def test_identity_matrix(self):
-        adj_mat = [[1, 0, 0, 0, 0, 0],
-                   [0, 1, 0, 0, 0, 0],
-                   [0, 0, 1, 0, 0, 0],
-                   [0, 0, 0, 1, 0, 0],
-                   [0, 0, 0, 0, 1, 0],
-                   [0, 0, 0, 0, 0, 1]]
-        expected_output = [[0], [1], [2], [3], [4], [5]]
-        self.assertEqual(adMatrixToAdList(adj_mat), expected_output)
+    def test_reachable_nodes_empty_adj_list(self):
+        adj_list = []
+        start_node = 0
+        expected = set()
+        self.assertEqual(reachableNodes(adj_list, start_node), expected)
 
 if __name__ == "__main__":
     unittest.main()
